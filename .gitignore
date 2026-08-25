@@ -1,0 +1,9 @@
+.idea/
+.venv/
+__pycache__/
+*.pyc
+.env
+resources/*.json
+*.md
+!README.md
+test*

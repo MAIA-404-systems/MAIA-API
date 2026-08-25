@@ -1,38 +1,38 @@
 # MAIA_API v3.0 — Distributed AI Load Balancer
 
-**MAIA_API** est un équilibreur de charge (Load Balancer) et routeur ultra-léger pour scaler vos modèles d'IA locaux (LLM et Vision) sous **llama.cpp server** et **Ollama** sur plusieurs ordinateurs de votre réseau local.
+**MAIA_API** est un équilibreur de charge (Load Balancer) et routeur ultra-léger conçu pour faciliter la mise à l'échelle de vos modèles d'IA locaux (LLM et Vision) exécutés via **llama.cpp server** et **Ollama** sur plusieurs ordinateurs au sein de votre réseau local.
 
 ---
 
-## 🌟 Points Forts
+## Fonctionnalités Principales
 
-* 🚀 **Scaling Multi-Ordinateurs** : Répartissez la charge de vos requêtes IA entre plusieurs PC de votre réseau.
-* 🤖 **Support Ollama & llama.cpp** : Découverte automatique des modèles via `/api/tags` (Ollama) et `/v1/models` (llama.cpp server).
-* ⚖️ **Load Balancing & Failover** : Algorithme **Round-Robin** & suivi de latence avec basculement automatique en cas de panne d'une machine.
-* 🖼️ **Support Vision Native** : Transmission transparente des requêtes d'images vers les modèles vision (`llava`, `qwen2-vl`, etc.).
-* 🔌 **Compatibilité OpenAI & Ollama** : Endpoints `/v1/chat/completions`, `/api/chat` et `/api/generate` avec streaming temps réel.
-* 📊 **Dashboard Web Moderne** : Interface glassmorphism pour suivre l'état des machines, les latences, les modèles disponibles et ajouter des nœuds dynamiquement.
+* **Mise à l'échelle distribuée** : Répartissez efficacement la charge de vos requêtes d'intelligence artificielle entre plusieurs postes de votre réseau.
+* **Support Ollama & llama.cpp** : Découverte automatique des modèles via les endpoints `/api/tags` (Ollama) et `/v1/models` (llama.cpp server).
+* **Équilibrage de charge et tolérance aux pannes** : Implémentation de l'algorithme Round-Robin, suivi des latences en temps réel et basculement automatique en cas d'indisponibilité d'un nœud.
+* **Support natif pour la vision par ordinateur** : Transmission transparente des requêtes d'analyse d'images vers les modèles spécialisés (tels que `llava`, `qwen2-vl`, etc.).
+* **Compatibilité avec les standards OpenAI & Ollama** : Prise en charge des endpoints `/v1/chat/completions`, `/api/chat` et `/api/generate` avec support du streaming en temps réel.
+* **Interface d'administration Web** : Tableau de bord moderne permettant la supervision de l'état des nœuds, des latences, la consultation des modèles disponibles et l'ajout dynamique de nouvelles ressources.
 
 ---
 
-## 🚀 Démarrage Rapide
+## Démarrage Rapide
 
 ### 1. Lancement de l'API
 ```bash
 python server.py
 ```
-L'API démarre sur `http://localhost:5000`.
+Le serveur API sera accessible à l'adresse : `http://localhost:11345`.
 
-### 2. Accès au Dashboard Web
-Ouvrez votre navigateur sur `http://localhost:5000/` pour accéder au tableau de bord de surveillance et de gestion des ordinateurs.
+### 2. Accès au Tableau de Bord
+Ouvrez votre navigateur web et accédez à l'URL `http://localhost:11345/` pour visualiser l'interface de surveillance et gérer les nœuds de calcul.
 
 ---
 
-## 📡 Utilisation des Endpoints API
+## Utilisation des Endpoints API
 
-### API Compatible OpenAI
+### API Compatible avec le standard OpenAI
 ```bash
-curl http://localhost:5000/v1/chat/completions \
+curl http://localhost:11345/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d '{
     "model": "llama3.1",
@@ -40,9 +40,9 @@ curl http://localhost:5000/v1/chat/completions \
   }'
 ```
 
-### API Compatible Ollama
+### API Compatible avec Ollama
 ```bash
-curl http://localhost:5000/api/chat \
+curl http://localhost:11345/api/chat \
   -H "Content-Type: application/json" \
   -d '{
     "model": "qwen2.5",
@@ -52,7 +52,7 @@ curl http://localhost:5000/api/chat \
 
 ---
 
-## 🧪 Exécution des Tests
+## Exécution des Tests
 ```bash
 python test_api.py
 ```

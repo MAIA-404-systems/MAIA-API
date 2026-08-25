@@ -96,6 +96,10 @@ CONNECT_TIMEOUT = float(os.getenv("CONNECT_TIMEOUT", "2.0"))
 REQUEST_TIMEOUT = float(os.getenv("REQUEST_TIMEOUT", "180.0"))
 MAX_CONTEXT_SIZE = int(os.getenv("MAX_CONTEXT_SIZE", "256000"))
 
+# Context optimization settings
+OPTI = os.getenv("OPTI", os.getenv("Opti", "true")).strip().lower() == "true"
+DEFAULT_CONTEXT = int(os.getenv("DEFAULT_CONTEXT", os.getenv("defaultcontext", "256000")))
+
 # Load balancing default strategy: "round_robin", "least_latency", or "least_connections"
 DEFAULT_LOAD_BALANCING_STRATEGY = os.getenv("DEFAULT_LOAD_BALANCING_STRATEGY", "round_robin")
 

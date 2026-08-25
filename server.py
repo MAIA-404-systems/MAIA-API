@@ -105,6 +105,17 @@ def estimate_context_size(data: Dict[str, Any]) -> int:
         return 16384
 
 
+def get_context_size(data: Dict[str, Any]) -> int:
+    if config.OPTI:
+        return min(estimate_context_size(data), config.MAX_CONTEXT_SIZE)
+    else:
+        # Check if the user specified a custom options.num_ctx first
+        user_num_ctx = data.get("options", {}).get("num_ctx")
+        if user_num_ctx:
+            return min(int(user_num_ctx), config.MAX_CONTEXT_SIZE)
+        return min(config.DEFAULT_CONTEXT, config.MAX_CONTEXT_SIZE)
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup: Initialize NodeRegistry and background refresh sweep
@@ -246,7 +257,7 @@ def create_app() -> FastAPI:
         is_stream = bool(data.get("stream", False))
 
         require_vision = has_image_in_payload(data, is_openai=True)
-        context_size = min(estimate_context_size(data), config.MAX_CONTEXT_SIZE)
+        context_size = get_context_size(data)
         decision = await router.route_request(
             requested_model, reg, require_vision=require_vision, client=client, context_size=context_size
         )
@@ -345,7 +356,7 @@ def create_app() -> FastAPI:
         is_stream = bool(data.get("stream", True))
 
         require_vision = has_image_in_payload(data, is_openai=False)
-        context_size = min(estimate_context_size(data), config.MAX_CONTEXT_SIZE)
+        context_size = get_context_size(data)
         decision = await router.route_request(
             requested_model, reg, require_vision=require_vision, client=client, context_size=context_size
         )
@@ -418,7 +429,7 @@ def create_app() -> FastAPI:
         is_stream = bool(data.get("stream", True))
 
         require_vision = has_image_in_payload(data, is_openai=False)
-        context_size = min(estimate_context_size(data), config.MAX_CONTEXT_SIZE)
+        context_size = get_context_size(data)
         decision = await router.route_request(
             requested_model, reg, require_vision=require_vision, client=client, context_size=context_size
         )
